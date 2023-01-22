@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <h1>Interface CORONA</h1>
+    <form>
+        <input type="text">
+        <br>
+        <button id="ajout">Ajouter</button>
+        <br>
+        <div class="content">
+            <div class="enregistre">
+                <h2>Liste des enregistrés </h2>
+                <ul id="enregistre"></ul>
+            </div>
+
+            <div class="vaccine">
+                <h2>Liste des vaccinés</h2>
+                <ul id="vaccine"></ul>
+            </div>
+        </div>
+    </form>
+    <script>
+        let Addbutton = document.getElementById("ajout");
+        let vaccine = document.getElementById("vaccine");
+        let enregistre = document.getElementById("enregistre");
+        let input = document.querySelector("input");
+
+        Addbutton.addEventListener("click", patientenregistre);
+
+        function patientenregistre() {
+            if (isInputEmpty()) {
+                alert("Veuillez ajouter un nom s'il vous plaît ! ");
+                return;
+            }
+            enregistre.innerHTML += `
+             <li>
+             ${input.value}
+             <button class="movebutton" onclick='move(this)'>X</button>
+             </li>`;
+             
+        }
+        function isInputEmpty() {
+            if (input.value == "") {
+            return true;
+            }
+            return false;
+        }
+
+        input.addEventListener("keypress", function (e) {
+            if (e.key == "Enter") {
+            patientvaccine();
+            }
+        });
+        function move(e) {
+            let id = e.target.parentElement.id;
+            let elementToMove = document.getElementById(id);
+            vaccine.innerHTML += `
+             <li>
+             ${elementToMove}
+             <button class="deletebutton" onclick='Delete(this)'>X</button>
+             </li>`;
+            elementToMove.remove();
+            
+        }
+        function Delete(e) {
+            let iid = e.target.parentElement.id;
+            let elementToDelete = document.getElementById(iid);
+            elementToDelete.remove();
+        }
+
+
+
+    </script>
+    
+</body>
+</html>
